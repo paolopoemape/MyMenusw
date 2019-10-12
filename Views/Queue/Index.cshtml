@@ -1,0 +1,79 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Queue Index</title>
+</head>
+<body>
+    <div>
+        <ul>
+
+            <li>
+
+
+                <a href="@Url.Action("AddOne","Queue")"
+                   class="w3-bar-item w3-button">Add one Item to Queue</a>
+            </li>
+            <li>
+                <a href="@Url.Action("AddHugeList","Queue")"
+                   class="w3-bar-item w3-button">Add Huge List of Items to Queue</a>
+
+            </li>
+
+            <li>
+                <a href="@Url.Action("Display","Queue")"
+                   class="w3-bar-item w3-button">Display Queue</a>
+
+            </li>
+
+
+            <li>
+                <a href="@Url.Action("DeleteFrom","Queue")"
+                   class="w3-bar-item w3-button">Delete from Queue</a>
+
+            </li>
+
+
+            <li>
+
+
+                <a href="@Url.Action("Clear","Queue")"
+                   class="w3-bar-item w3-button">Clear Queue</a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("Search","Queue")"
+                   class="w3-bar-item w3-button">Search Queue</a>
+
+            </li>
+
+            <li>
+                <a href="@Url.Action("Return","Queue")"
+                   class="w3-bar-item w3-button">Return to Main Menu</a>
+
+            </li>
+
+
+        </ul>
+
+
+    </div>
+
+    @foreach (var sQueue in ViewBag.MyQueue)
+        {
+            <p>
+
+                @sQueue
+
+            </p>
+        }
+    
+
+</body>
+    </html>
