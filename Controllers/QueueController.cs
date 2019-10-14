@@ -24,11 +24,9 @@ namespace MyMenus.Controllers
 
         public ActionResult AddOne()
         {
-            myQueue.Enqueue("New Entry " + (myQueue.Count+ 1));
+           myQueue.Enqueue("New Entry " + (myQueue.Count+ 1) );
 
-            ViewBag.MyQueue = myQueue;
-
-            return View("Index");
+           return View("Index");
         }
 
         public ActionResult AddHugeList()
@@ -40,71 +38,104 @@ namespace MyMenus.Controllers
                 
 
             {
-                myQueue.Enqueue("New Entry " + (myQueue.Count + 1));
+                myQueue.Enqueue( "New Entry " + (myQueue.Count + 1));
                 
             }
 
             ViewBag.MyQueue = myQueue;
 
 
-            return View("Index");
+          return View("Index");
         }
 
-        public ActionResult Display()
+        public ActionResult Display(String display="display")
         {
-
-            foreach(string element in myQueue)
-            {
-                ViewBag.mystuff = element;
-
-            }
-
-           
-
-
-            return View("Index");
-
-
-        }
-
-
-
-
-        public ActionResult DeleteFrom()
-        {
+            ViewBag.MyQueue = myQueue;
             
             return View("Index");
+            
         }
 
+       
 
 
-
-
-        public ActionResult Clear()
+        public ActionResult DeleteFrom(string Elemento )
         {
+            if (!myQueue.Where((item) => item.Contains(Elemento)).Any())
+            {
+                ViewBag.error = $"The item {Elemento} doesn't exist ";
+                return View("Index");
+            }
 
-            myQueue.Clear();
-            ViewBag.MyQueue = myQueue;
-            return View("Index");
-        }
-
-
-
-        public ActionResult Search()
-        {
+            myQueue = new Queue<string>( myQueue.Where((item) => !item.Contains(Elemento)));
 
 
             return View("Index");
         }
+        
+        
+
+       public ActionResult Clear()
+       {
+
+           myQueue.Clear();
+           ViewBag.MyQueue = myQueue;
+           return View("Index");
+       }
+       
 
 
+       public ActionResult Search(String Elemento)
+       {
+            ViewBag.Accion = "Buscar";
 
-        public ActionResult Return()
-        {
-            ViewBag.MyQueue = myQueue;
-            return RedirectToAction("Index","Home");
-        }
+            if (!myQueue.Where((item) => item.Contains(Elemento)).Any())
+            {
+                ViewBag.error1 = $"The item {Elemento} doesn't exist, Processing Time: ";
 
+                System.Diagnostics.Stopwatch sw1 = new System.Diagnostics.Stopwatch();
+
+                sw1.Start();
+
+                //ViewBag.MyQueue = new Queue<string>(myQueue.Where((item) => item.Contains(Elemento)));
+                //loop to do all the work
+
+                sw1.Stop();
+
+                TimeSpan ts1 = sw1.Elapsed;
+
+                ViewBag.StopWatch1 = ts1;
+
+
+                return View("Index");
+
+
+            }
+            else
+            {
+                System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+
+                sw.Start();
+
+                //ViewBag.MyQueue = new Queue<string>(myQueue.Where((item) => item.Contains(Elemento)));
+                //loop to do all the work
+
+                sw.Stop();
+
+                TimeSpan ts = sw.Elapsed;
+
+                ViewBag.StopWatch1 = $"Item found, Processing time " + ts;
+
+                return View("Index");
+            }
+       }
+
+        
+       public ActionResult Return()
+       {
+           ViewBag.MyQueue = myQueue;
+           return RedirectToAction("Index","Home");
+       }
 
 
 

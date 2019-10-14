@@ -27,29 +27,49 @@
             </li>
 
             <li>
-                <a href="@Url.Action("Display","Queue")"
+                <a href="@Url.Action("Display","Queue", new {display="display" })"
                    class="w3-bar-item w3-button">Display Queue</a>
 
             </li>
 
 
             <li>
-                <a href="@Url.Action("DeleteFrom","Queue")"
-                   class="w3-bar-item w3-button">Delete from Queue</a>
+                <form action="/Queue/DeleteFrom/">
+                   
+                    <input type="text" name="Elemento"/>
+                    <input type="submit"  value="Delete from Queue"/>
+                </form>
+               
+                
+                @if (ViewBag.error != null)
+                { 
+                    <strong>@ViewBag.error</strong>
+                }
 
             </li>
 
 
             <li>
-
 
                 <a href="@Url.Action("Clear","Queue")"
                    class="w3-bar-item w3-button">Clear Queue</a>
             </li>
 
             <li>
-                <a href="@Url.Action("Search","Queue")"
-                   class="w3-bar-item w3-button">Search Queue</a>
+
+                <form action="/Queue/Search/">
+
+                    <input type="text" name="Elemento" />
+                    <input type="submit" value="Search element" />
+                </form>
+
+                @if (ViewBag.Accion != null)
+                {
+                    //<strong>Item cannot be found</strong>
+                <strong>@ViewBag.error1  @ViewBag.StopWatch1 </strong>
+                   // <strong> @ViewBag.StopWatch</strong>
+                }
+                
 
             </li>
 
@@ -64,8 +84,10 @@
 
 
     </div>
-
-    @foreach (var sQueue in ViewBag.MyQueue)
+ 
+    @if (Request.QueryString["display"] != null)
+    {
+        foreach (var sQueue in ViewBag.MyQueue)
         {
             <p>
 
@@ -73,7 +95,8 @@
 
             </p>
         }
-    
+    }
+
 
 </body>
     </html>
